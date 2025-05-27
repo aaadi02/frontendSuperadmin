@@ -59,12 +59,18 @@ const Dashboard = () => {
           departmentsResponse,
           streamsResponse,
         ] = await Promise.all([
-          fetch("http://localhost:5000/api/superadmin/students"),
           fetch(
-            `http://localhost:5000/api/superadmin/faculties?role=${facultyRoleFilter}`
+            "https://frontend-superadmin.vercel.app//api/superadmin/students"
           ),
-          fetch("http://localhost:5000/api/superadmin/departments"),
-          fetch("http://localhost:5000/api/superadmin/streams"),
+          fetch(
+            `https://frontend-superadmin.vercel.app//api/superadmin/faculties?role=${facultyRoleFilter}`
+          ),
+          fetch(
+            "https://frontend-superadmin.vercel.app//api/superadmin/departments"
+          ),
+          fetch(
+            "https://frontend-superadmin.vercel.app//api/superadmin/streams"
+          ),
         ]);
 
         if (!studentsResponse.ok)

@@ -23,7 +23,7 @@
 
 //   const fetchStreams = async () => {
 //     try {
-//       const res = await axios.get("http://localhost:5000/api/streams", {
+//       const res = await axios.get("https://frontend-superadmin.vercel.app//api/streams", {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       setStreams(res.data);
@@ -37,7 +37,7 @@
 
 //   const fetchDepartments = async (streamId) => {
 //     try {
-//       const res = await axios.get(`http://localhost:5000/api/superadmin/departments?streamId=${streamId}`, {
+//       const res = await axios.get(`https://frontend-superadmin.vercel.app//api/superadmin/departments?streamId=${streamId}`, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       setDepartments(res.data);
@@ -50,7 +50,7 @@
 //     if (!newDept.trim() || !selectedStreamId) return;
 //     try {
 //       await axios.post(
-//         "http://localhost:5000/api/superadmin/departments",
+//         "https://frontend-superadmin.vercel.app//api/superadmin/departments",
 //         { name: newDept, stream: selectedStreamId },
 //         {
 //           headers: { Authorization: `Bearer ${token}` },
@@ -65,7 +65,7 @@
 
 //   const handleDelete = async (id) => {
 //     try {
-//       await axios.delete(`http://localhost:5000/api/superadmin/departments/${id}`, {
+//       await axios.delete(`https://frontend-superadmin.vercel.app//api/superadmin/departments/${id}`, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       fetchDepartments(selectedStreamId);
@@ -77,7 +77,7 @@
 //   const handleEdit = async (id) => {
 //     try {
 //       await axios.put(
-//         `http://localhost:5000/api/superadmin/departments/${id}`,
+//         `https://frontend-superadmin.vercel.app//api/superadmin/departments/${id}`,
 //         { name: editedDeptName, stream: selectedStreamId },
 //         {
 //           headers: { Authorization: `Bearer ${token}` },
@@ -152,7 +152,6 @@
 
 // export default DepartmentManager;
 
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -178,9 +177,12 @@ const DepartmentManager = () => {
 
   const fetchStreams = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/streams", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://frontend-superadmin.vercel.app//api/streams",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setStreams(res.data);
       if (res.data.length > 0) {
         setSelectedStreamId(res.data[0]._id);
@@ -192,9 +194,12 @@ const DepartmentManager = () => {
 
   const fetchDepartments = async (streamId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/superadmin/departments?streamId=${streamId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `https://frontend-superadmin.vercel.app//api/superadmin/departments?streamId=${streamId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setDepartments(res.data);
     } catch (err) {
       console.error("Failed to fetch departments", err);
@@ -205,7 +210,7 @@ const DepartmentManager = () => {
     if (!newDept.trim() || !selectedStreamId) return;
     try {
       await axios.post(
-        "http://localhost:5000/api/superadmin/departments",
+        "https://frontend-superadmin.vercel.app//api/superadmin/departments",
         { name: newDept, stream: selectedStreamId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -220,9 +225,12 @@ const DepartmentManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/superadmin/departments/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(
+        `https://frontend-superadmin.vercel.app//api/superadmin/departments/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       fetchDepartments(selectedStreamId);
     } catch (err) {
       console.error("Error deleting department", err);
@@ -232,7 +240,7 @@ const DepartmentManager = () => {
   const handleEdit = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/superadmin/departments/${id}`,
+        `https://frontend-superadmin.vercel.app//api/superadmin/departments/${id}`,
         { name: editedDeptName, stream: selectedStreamId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -249,11 +257,15 @@ const DepartmentManager = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
       {/* Header */}
-      <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">Manage Departments</h3>
+      <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">
+        Manage Departments
+      </h3>
 
       {/* Stream Selector */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Select Stream:</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Select Stream:
+        </label>
         <select
           value={selectedStreamId}
           onChange={(e) => setSelectedStreamId(e.target.value)}
@@ -271,7 +283,10 @@ const DepartmentManager = () => {
       <div className="mb-8">
         <div className="flex flex-col md:flex-row md:items-end gap-3">
           <div className="flex-grow">
-            <label htmlFor="newDepartment" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="newDepartment"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               New Department
             </label>
             <input
@@ -294,10 +309,14 @@ const DepartmentManager = () => {
 
       {/* Departments List */}
       <div>
-        <h4 className="text-lg font-semibold text-gray-700 mb-3">Departments</h4>
+        <h4 className="text-lg font-semibold text-gray-700 mb-3">
+          Departments
+        </h4>
 
         {departments.length === 0 ? (
-          <p className="text-gray-500 italic">No departments found. Add one to get started.</p>
+          <p className="text-gray-500 italic">
+            No departments found. Add one to get started.
+          </p>
         ) : (
           <ul className="bg-gray-50 rounded-lg divide-y divide-gray-200">
             {departments.map((dept) => (
@@ -327,7 +346,9 @@ const DepartmentManager = () => {
                   </div>
                 ) : (
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-800 font-medium">{dept.name}</span>
+                    <span className="text-gray-800 font-medium">
+                      {dept.name}
+                    </span>
                     <div className="flex gap-2">
                       <button
                         onClick={() => {

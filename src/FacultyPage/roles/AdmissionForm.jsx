@@ -29,7 +29,7 @@ function AdmissionForm() {
       setLoadingCastes(true);
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/superadmin/castes",
+          "https://frontend-superadmin.vercel.app//api/superadmin/castes",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -52,26 +52,41 @@ function AdmissionForm() {
       try {
         const [streamRes, departmentRes, semesterRes, subjectRes] =
           await Promise.all([
-            axios.get("http://localhost:5000/api/streams", {
+            axios.get("https://frontend-superadmin.vercel.app//api/streams", {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
               },
             }),
-            axios.get("http://localhost:5000/api/superadmin/departments", {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
-              },
-            }),
-            axios.get("http://localhost:5000/api/superadmin/semesters", {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
-              },
-            }),
-            axios.get("http://localhost:5000/api/superadmin/subjects", {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
-              },
-            }),
+            axios.get(
+              "https://frontend-superadmin.vercel.app//api/superadmin/departments",
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "facultyToken"
+                  )}`,
+                },
+              }
+            ),
+            axios.get(
+              "https://frontend-superadmin.vercel.app//api/superadmin/semesters",
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "facultyToken"
+                  )}`,
+                },
+              }
+            ),
+            axios.get(
+              "https://frontend-superadmin.vercel.app//api/superadmin/subjects",
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "facultyToken"
+                  )}`,
+                },
+              }
+            ),
           ]);
 
         const streamsData = streamRes.data || [];
@@ -112,7 +127,7 @@ function AdmissionForm() {
         setLoading(true);
         try {
           const res = await axios.get(
-            `http://localhost:5000/api/students/subjects/${formData.semester}/${formData.department}`,
+            `https://frontend-superadmin.vercel.app//api/students/subjects/${formData.semester}/${formData.department}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -198,7 +213,7 @@ function AdmissionForm() {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/students/${editingId}`,
+          `https://frontend-superadmin.vercel.app//api/students/${editingId}`,
           formData,
           {
             headers: {
@@ -209,11 +224,15 @@ function AdmissionForm() {
         alert("Student updated successfully!");
         setEditingId(null);
       } else {
-        await axios.post("http://localhost:5000/api/students", formData, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
-          },
-        });
+        await axios.post(
+          "https://frontend-superadmin.vercel.app//api/students",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
+            },
+          }
+        );
         alert("Student saved successfully!");
       }
       setFormData({});

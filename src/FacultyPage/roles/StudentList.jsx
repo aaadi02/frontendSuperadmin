@@ -44,7 +44,7 @@ function StudentList() {
         ? `?admissionType=${admissionTypeFilter}`
         : "";
       const res = await axios.get(
-        `http://localhost:5000/api/students${query}`,
+        `https://frontend-superadmin.vercel.app//api/students${query}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -68,7 +68,7 @@ function StudentList() {
     const fetchSemesters = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/superadmin/semesters",
+          "https://frontend-superadmin.vercel.app//api/superadmin/semesters",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -111,11 +111,14 @@ function StudentList() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/students/${id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
-          },
-        });
+        await axios.delete(
+          `https://frontend-superadmin.vercel.app//api/students/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
+            },
+          }
+        );
         fetchStudents();
         alert("Student deleted successfully!");
       } catch (err) {
@@ -127,7 +130,7 @@ function StudentList() {
   const handlePromote = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/students/promote/${id}`,
+        `https://frontend-superadmin.vercel.app//api/students/promote/${id}`,
         {},
         {
           headers: {
@@ -215,7 +218,7 @@ function StudentList() {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/students/generate-certificate/${studentId}`,
+        `https://frontend-superadmin.vercel.app//api/students/generate-certificate/${studentId}`,
         {
           type,
           reason,
@@ -270,7 +273,7 @@ function StudentList() {
   const openBacklogModal = async (studentId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/students/${studentId}`,
+        `https://frontend-superadmin.vercel.app//api/students/${studentId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -283,7 +286,7 @@ function StudentList() {
       if (semesterId && student.department?._id) {
         try {
           const subjectsRes = await axios.get(
-            `http://localhost:5000/api/students/subjects/${semesterId}/${student.department._id}`,
+            `https://frontend-superadmin.vercel.app//api/students/subjects/${semesterId}/${student.department._id}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -341,7 +344,7 @@ function StudentList() {
     if (semesterId && backlogModal.departmentId) {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/students/subjects/${semesterId}/${backlogModal.departmentId}`,
+          `https://frontend-superadmin.vercel.app//api/students/subjects/${semesterId}/${backlogModal.departmentId}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
@@ -428,7 +431,7 @@ function StudentList() {
         );
         if (!existingBacklog) {
           await axios.post(
-            `http://localhost:5000/api/students/${studentId}/add-backlog`,
+            `https://frontend-superadmin.vercel.app//api/students/${studentId}/add-backlog`,
             { subjectIds: [subjectId], semesterId },
             {
               headers: {
@@ -447,7 +450,7 @@ function StudentList() {
         );
         if (backlog) {
           await axios.put(
-            `http://localhost:5000/api/students/${studentId}/update-backlog/${backlog._id}`,
+            `https://frontend-superadmin.vercel.app//api/students/${studentId}/update-backlog/${backlog._id}`,
             { status: "Cleared" },
             {
               headers: {
@@ -460,7 +463,7 @@ function StudentList() {
 
       // Update student with new semesterRecords
       await axios.put(
-        `http://localhost:5000/api/students/${studentId}`,
+        `https://frontend-superadmin.vercel.app//api/students/${studentId}`,
         { semesterRecords: updatedSemesterRecords },
         {
           headers: {
@@ -472,7 +475,7 @@ function StudentList() {
       alert(`Subject status updated to ${status}!`);
       fetchStudents();
       const res = await axios.get(
-        `http://localhost:5000/api/students/${studentId}`,
+        `https://frontend-superadmin.vercel.app//api/students/${studentId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("facultyToken")}`,
