@@ -31,7 +31,7 @@ const SubjectManager = () => {
   const fetchStreams = async () => {
     try {
       const res = await axios.get(
-        "https://frontend-superadmin.vercel.app//api/streams",
+        "https://backend-super-admin.vercel.app/api/streams",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -48,7 +48,7 @@ const SubjectManager = () => {
   const fetchDepartments = async (streamId) => {
     try {
       const res = await axios.get(
-        `https://frontend-superadmin.vercel.app//api/superadmin/departments?streamId=${streamId}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/departments?streamId=${streamId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -65,7 +65,7 @@ const SubjectManager = () => {
   const fetchSubjects = async (departmentId) => {
     try {
       const res = await axios.get(
-        `https://frontend-superadmin.vercel.app//api/superadmin/subjects?departmentId=${departmentId}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/subjects?departmentId=${departmentId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -80,7 +80,7 @@ const SubjectManager = () => {
     if (!newSubject.trim() || !selectedDepartmentId) return;
     try {
       await axios.post(
-        "https://frontend-superadmin.vercel.app//api/superadmin/subjects",
+        "https://backend-super-admin.vercel.app/api/superadmin/subjects",
         { name: newSubject, department: selectedDepartmentId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -96,7 +96,7 @@ const SubjectManager = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://frontend-superadmin.vercel.app//api/superadmin/subjects/${id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/subjects/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -110,7 +110,7 @@ const SubjectManager = () => {
   const handleEdit = async (id) => {
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/subjects/${id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/subjects/${id}`,
         { name: editedSubjectName, department: selectedDepartmentId },
         {
           headers: { Authorization: `Bearer ${token}` },

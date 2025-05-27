@@ -30,7 +30,7 @@
 
 // // //     const fetchUser = async () => {
 // // //       try {
-// // //         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+// // //         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
 // // //           },
@@ -251,7 +251,7 @@
 
 // //     const fetchUser = async () => {
 // //       try {
-// //         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+// //         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
 // //           },
@@ -508,7 +508,7 @@
 
 //     const fetchUser = async () => {
 //       try {
-//         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+//         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -803,7 +803,7 @@
 
 // // //     const fetchUser = async () => {
 // // //       try {
-// // //         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+// // //         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
 // // //           },
@@ -1024,7 +1024,7 @@
 
 // //     const fetchUser = async () => {
 // //       try {
-// //         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+// //         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
 // //           },
@@ -1281,7 +1281,7 @@
 
 //     const fetchUser = async () => {
 //       try {
-//         const res = await axios.get("https://frontend-superadmin.vercel.app//api/superadmin", {
+//         const res = await axios.get("https://backend-super-admin.vercel.app/api/superadmin", {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -1613,7 +1613,7 @@ const SuperAdminDashboard = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          "https://frontend-superadmin.vercel.app//api/superadmin",
+          "https://backend-super-admin.vercel.app/api/superadmin",
           {
             headers: {
               Authorization: `Bearer ${token}`,

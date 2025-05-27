@@ -19,7 +19,7 @@
 //   const fetchCastes = async () => {
 //     try {
 //       const res = await axios.get(
-//         "https://frontend-superadmin.vercel.app//api/superadmin/castes",
+//         "https://backend-super-admin.vercel.app/api/superadmin/castes",
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
 //       setCastes(res.data);
@@ -32,7 +32,7 @@
 //     if (!newCaste.trim()) return;
 //     try {
 //       await axios.post(
-//         "https://frontend-superadmin.vercel.app//api/superadmin/castes",
+//         "https://backend-super-admin.vercel.app/api/superadmin/castes",
 //         { name: newCaste },
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -46,7 +46,7 @@
 //   const handleDelete = async (id) => {
 //     try {
 //       await axios.delete(
-//         `https://frontend-superadmin.vercel.app//api/superadmin/castes/${id}`,
+//         `https://backend-super-admin.vercel.app/api/superadmin/castes/${id}`,
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
 //       fetchCastes();
@@ -59,7 +59,7 @@
 //     if (!editedName.trim()) return;
 //     try {
 //       await axios.put(
-//         `https://frontend-superadmin.vercel.app//api/superadmin/castes/${id}`,
+//         `https://backend-super-admin.vercel.app/api/superadmin/castes/${id}`,
 //         { name: editedName },
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -78,7 +78,7 @@
 //     const updatedSubs = [...(caste.subcastes || []), sub];
 //     try {
 //       await axios.put(
-//         `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+//         `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
 //         { subcastes: updatedSubs },
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -99,7 +99,7 @@
 
 //     try {
 //       await axios.put(
-//         `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+//         `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
 //         { subcastes: updatedSubcastes },
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -116,7 +116,7 @@
 //     const updatedSubcastes = caste.subcastes.filter((_, i) => i !== index);
 //     try {
 //       await axios.put(
-//         `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+//         `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
 //         { subcastes: updatedSubcastes },
 //         { headers: { Authorization: `Bearer ${token}` } }
 //       );
@@ -265,7 +265,7 @@ const CasteManager = () => {
   const fetchCastes = async () => {
     try {
       const res = await axios.get(
-        "https://frontend-superadmin.vercel.app//api/superadmin/castes",
+        "https://backend-super-admin.vercel.app/api/superadmin/castes",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCastes(res.data);
@@ -278,7 +278,7 @@ const CasteManager = () => {
     if (!newCaste.trim()) return;
     try {
       await axios.post(
-        "https://frontend-superadmin.vercel.app//api/superadmin/castes",
+        "https://backend-super-admin.vercel.app/api/superadmin/castes",
         { name: newCaste },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -292,7 +292,7 @@ const CasteManager = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://frontend-superadmin.vercel.app//api/superadmin/castes/${id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/castes/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       fetchCastes();
@@ -305,7 +305,7 @@ const CasteManager = () => {
     if (!editedName.trim()) return;
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/castes/${id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/castes/${id}`,
         { name: editedName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -324,7 +324,7 @@ const CasteManager = () => {
     const updatedSubs = [...(caste.subcastes || []), sub];
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+        `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
         { subcastes: updatedSubs },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -345,7 +345,7 @@ const CasteManager = () => {
 
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+        `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
         { subcastes: updatedSubcastes },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -362,7 +362,7 @@ const CasteManager = () => {
     const updatedSubcastes = caste.subcastes.filter((_, i) => i !== index);
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/castes/${casteId}/subcastes`,
+        `https://backend-super-admin.vercel.app/api/superadmin/castes/${casteId}/subcastes`,
         { subcastes: updatedSubcastes },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -12,7 +12,7 @@ const StreamManager = () => {
       try {
         // Keep the original API call logic
         const res = await fetch(
-          "https://frontend-superadmin.vercel.app//api/streams"
+          "https://backend-super-admin.vercel.app/api/streams"
         );
         const data = await res.json();
         setStreams(data);
@@ -30,7 +30,7 @@ const StreamManager = () => {
     try {
       // Keep the original API call logic
       const res = await fetch(
-        "https://frontend-superadmin.vercel.app//api/streams",
+        "https://backend-super-admin.vercel.app/api/streams",
         {
           method: "POST",
           headers: {
@@ -55,7 +55,7 @@ const StreamManager = () => {
     try {
       // Keep the original API call logic
       const res = await fetch(
-        `https://frontend-superadmin.vercel.app//api/streams/${editingStream._id}`,
+        `https://backend-super-admin.vercel.app/api/streams/${editingStream._id}`,
         {
           method: "PUT",
           headers: {
@@ -75,7 +75,7 @@ const StreamManager = () => {
   const handleDeleteStream = async (id) => {
     try {
       // Keep the original API call logic
-      await fetch(`https://frontend-superadmin.vercel.app//api/streams/${id}`, {
+      await fetch(`https://backend-super-admin.vercel.app/api/streams/${id}`, {
         method: "DELETE",
       });
       setStreams(streams.filter((s) => s._id !== id));

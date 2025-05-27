@@ -75,14 +75,12 @@ const StudentDashboard = () => {
           departmentsResponse,
           streamsResponse,
         ] = await Promise.all([
-          fetch("https://frontend-superadmin.vercel.app//api/students"),
+          fetch("https://backend-super-admin.vercel.app/api/students"),
+          fetch("https://backend-super-admin.vercel.app/api/superadmin/castes"),
           fetch(
-            "https://frontend-superadmin.vercel.app//api/superadmin/castes"
+            "https://backend-super-admin.vercel.app/api/superadmin/departments"
           ),
-          fetch(
-            "https://frontend-superadmin.vercel.app//api/superadmin/departments"
-          ),
-          fetch("https://frontend-superadmin.vercel.app//api/streams"),
+          fetch("https://backend-super-admin.vercel.app/api/streams"),
         ]);
 
         // Check if responses are successful

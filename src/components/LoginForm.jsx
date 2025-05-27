@@ -47,7 +47,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://frontend-superadmin.vercel.app//api/superadmin/login",
+        "https://backend-super-admin.vercel.app/api/superadmin/login",
         {
           username,
           password,

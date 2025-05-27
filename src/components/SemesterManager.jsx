@@ -28,10 +28,10 @@ const SemesterManager = () => {
       try {
         const [semesterRes, subjectRes] = await Promise.all([
           axios.get(
-            "https://frontend-superadmin.vercel.app//api/superadmin/semesters"
+            "https://backend-super-admin.vercel.app/api/superadmin/semesters"
           ),
           axios.get(
-            "https://frontend-superadmin.vercel.app//api/superadmin/subjects"
+            "https://backend-super-admin.vercel.app/api/superadmin/subjects"
           ),
         ]);
         setSemesters(semesterRes.data);
@@ -85,7 +85,7 @@ const SemesterManager = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://frontend-superadmin.vercel.app//api/superadmin/semesters",
+        "https://backend-super-admin.vercel.app/api/superadmin/semesters",
         {
           number: Number(newSemester.number),
           subjectIds: newSemester.subjectIds,
@@ -125,7 +125,7 @@ const SemesterManager = () => {
     setLoading(true);
     try {
       const res = await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/semesters/${editingSemester._id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/semesters/${editingSemester._id}`,
         {
           number: Number(editingSemester.number),
           subjectIds: editingSemester.subjectIds,
@@ -151,7 +151,7 @@ const SemesterManager = () => {
     setLoading(true);
     try {
       await axios.delete(
-        `https://frontend-superadmin.vercel.app//api/superadmin/semesters/${semesterId}`
+        `https://backend-super-admin.vercel.app/api/superadmin/semesters/${semesterId}`
       );
       setSemesters(semesters.filter((semester) => semester._id !== semesterId));
       setError("");

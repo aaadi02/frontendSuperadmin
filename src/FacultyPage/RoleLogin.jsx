@@ -28,7 +28,7 @@ const RoleLogin = () => {
 
     try {
       const res = await axios.post(
-        "https://frontend-superadmin.vercel.app//api/faculty/rolelogin",
+        "https://backend-super-admin.vercel.app/api/faculty/rolelogin",
         {
           username,
           password,

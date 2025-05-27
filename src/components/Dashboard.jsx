@@ -60,16 +60,16 @@ const Dashboard = () => {
           streamsResponse,
         ] = await Promise.all([
           fetch(
-            "https://frontend-superadmin.vercel.app//api/superadmin/students"
+            "https://backend-super-admin.vercel.app/api/superadmin/students"
           ),
           fetch(
-            `https://frontend-superadmin.vercel.app//api/superadmin/faculties?role=${facultyRoleFilter}`
+            `https://backend-super-admin.vercel.app/api/superadmin/faculties?role=${facultyRoleFilter}`
           ),
           fetch(
-            "https://frontend-superadmin.vercel.app//api/superadmin/departments"
+            "https://backend-super-admin.vercel.app/api/superadmin/departments"
           ),
           fetch(
-            "https://frontend-superadmin.vercel.app//api/superadmin/streams"
+            "https://backend-super-admin.vercel.app/api/superadmin/streams"
           ),
         ]);
 

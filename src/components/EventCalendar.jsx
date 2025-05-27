@@ -55,7 +55,7 @@ const EventCalendar = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get(
-        "https://frontend-superadmin.vercel.app//api/superadmin/events",
+        "https://backend-super-admin.vercel.app/api/superadmin/events",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -98,7 +98,7 @@ const EventCalendar = () => {
 
     try {
       await axios.post(
-        "https://frontend-superadmin.vercel.app//api/superadmin/events",
+        "https://backend-super-admin.vercel.app/api/superadmin/events",
         newEvent,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -120,7 +120,7 @@ const EventCalendar = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://frontend-superadmin.vercel.app//api/superadmin/events/${id}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/events/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -151,7 +151,7 @@ const EventCalendar = () => {
 
     try {
       await axios.put(
-        `https://frontend-superadmin.vercel.app//api/superadmin/events/${editingId}`,
+        `https://backend-super-admin.vercel.app/api/superadmin/events/${editingId}`,
         {
           ...editedEvent,
           startTime: editedEvent.startTime

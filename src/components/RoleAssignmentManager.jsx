@@ -12,7 +12,7 @@
 
 //   const fetchFaculty = async () => {
 //     try {
-//       const res = await axios.get("https://frontend-superadmin.vercel.app//api/faculty", {
+//       const res = await axios.get("https://backend-super-admin.vercel.app/api/faculty", {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 
@@ -40,7 +40,7 @@
 //     const faculty = facultyList.find((f) => f._id === id);
 //     try {
 //       await axios.put(
-//         `https://frontend-superadmin.vercel.app//api/faculty/${id}/status`,
+//         `https://backend-super-admin.vercel.app/api/faculty/${id}/status`,
 //         {
 //           employmentStatus: faculty.updatedStatus,
 //         },
@@ -58,7 +58,7 @@
 //   const handleDelete = async (id) => {
 //     if (!window.confirm("Are you sure you want to delete this faculty?")) return;
 //     try {
-//       await axios.delete(`https://frontend-superadmin.vercel.app//api/faculty/${id}`, {
+//       await axios.delete(`https://backend-super-admin.vercel.app/api/faculty/${id}`, {
 //         headers: { Authorization: `Bearer ${token}` },
 //       });
 //       setFacultyList(facultyList.filter((f) => f._id !== id));
@@ -132,7 +132,7 @@ const RoleAssignmentManager = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://frontend-superadmin.vercel.app//api/superadmin/faculties",
+        "https://backend-super-admin.vercel.app/api/superadmin/faculties",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -175,7 +175,7 @@ const RoleAssignmentManager = () => {
     const faculty = facultyList.find((f) => f._id === id);
     try {
       const response = await fetch(
-        `https://frontend-superadmin.vercel.app//api/faculty/${id}/status`,
+        `https://backend-super-admin.vercel.app/api/faculty/${id}/status`,
         {
           method: "PUT",
           headers: {
@@ -212,7 +212,7 @@ const RoleAssignmentManager = () => {
       return;
     try {
       const response = await fetch(
-        `https://frontend-superadmin.vercel.app//api/faculty/${id}`,
+        `https://backend-super-admin.vercel.app/api/faculty/${id}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
