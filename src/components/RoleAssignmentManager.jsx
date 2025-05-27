@@ -1,161 +1,74 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const RoleAssignmentManager = () => {
-//   const [facultyList, setFacultyList] = useState([]);
-//   const employmentStatuses = ["Probation Period", "Permanent Employee"];
-//   const token = localStorage.getItem("token");
-
-//   useEffect(() => {
-//     fetchFaculty();
-//   }, []);
-
-//   const fetchFaculty = async () => {
-//     try {
-//       const res = await axios.get("https://backend-super-admin.vercel.app/api/faculty", {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-
-//       // Add editable status field
-//       const withEditable = res.data.map((faculty) => ({
-//         ...faculty,
-//         updatedStatus: faculty.employmentStatus || "Probation Period",
-//       }));
-
-//       setFacultyList(withEditable);
-//     } catch (err) {
-//       console.error("Error fetching faculty:", err);
-//     }
-//   };
-
-//   const handleStatusChange = (id, value) => {
-//     setFacultyList((prev) =>
-//       prev.map((faculty) =>
-//         faculty._id === id ? { ...faculty, updatedStatus: value } : faculty
-//       )
-//     );
-//   };
-
-//   const handleSave = async (id) => {
-//     const faculty = facultyList.find((f) => f._id === id);
-//     try {
-//       await axios.put(
-//         `https://backend-super-admin.vercel.app/api/faculty/${id}/status`,
-//         {
-//           employmentStatus: faculty.updatedStatus,
-//         },
-//         {
-//           headers: { Authorization: `Bearer ${token}` },
-//         }
-//       );
-//       alert("Employment status updated.");
-//     } catch (err) {
-//       console.error("Error updating status:", err);
-//       alert("Update failed.");
-//     }
-//   };
-
-//   const handleDelete = async (id) => {
-//     if (!window.confirm("Are you sure you want to delete this faculty?")) return;
-//     try {
-//       await axios.delete(`https://backend-super-admin.vercel.app/api/faculty/${id}`, {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       setFacultyList(facultyList.filter((f) => f._id !== id));
-//       alert("Faculty deleted.");
-//     } catch (err) {
-//       console.error("Error deleting faculty:", err);
-//       alert("Deletion failed.");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h3>Manage Non-Teaching Faculty</h3>
-//       <table border="1" cellPadding="10">
-//         <thead>
-//           <tr>
-//             <th>Name</th>
-//             <th>Role</th>
-//             <th>Employment Status</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {facultyList.map((faculty) => (
-//             <tr key={faculty._id}>
-//               <td>{faculty.name}</td>
-//               <td>{faculty.role}</td>
-//               <td>
-//                 <select
-//                   value={faculty.updatedStatus}
-//                   onChange={(e) =>
-//                     handleStatusChange(faculty._id, e.target.value)
-//                   }
-//                 >
-//                   {employmentStatuses.map((status) => (
-//                     <option key={status} value={status}>
-//                       {status}
-//                     </option>
-//                   ))}
-//                 </select>
-//               </td>
-//               <td>
-//                 <button onClick={() => handleSave(faculty._id)}>Save</button>{" "}
-//                 <button onClick={() => handleDelete(faculty._id)}>Delete</button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default RoleAssignmentManager;
-
 import React, { useEffect, useState } from "react";
 import { UserX, UserCheck, Save, Trash2, RefreshCw, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const RoleAssignmentManager = () => {
   const [facultyList, setFacultyList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [actionLoading, setActionLoading] = useState({});
   const employmentStatuses = ["Probation Period", "Permanent Employee"];
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      setError("Please log in to access this page.");
+      navigate("/faculty/rolelogin");
+      return;
+    }
     fetchFaculty();
   }, []);
 
   const fetchFaculty = async () => {
     setLoading(true);
+    setError(null);
     try {
       const response = await fetch(
-        "https://backend-super-admin.vercel.app/api/superadmin/faculties",
+        "https://backend-super-admin.vercel.app/api/faculty?type=Non-Teaching",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch faculty data");
+        if (response.status === 401) {
+          throw new Error("Unauthorized. Please log in again.");
+        }
+        throw new Error(`Failed to fetch faculty data: ${response.statusText}`);
       }
 
       const data = await response.json();
 
+      // Log response for debugging
+      console.log("API Response:", data);
+
+      // Handle different response structures
+      let facultyArray = Array.isArray(data) ? data : data.data || [];
+
+      if (!Array.isArray(facultyArray)) {
+        throw new Error(
+          "Expected an array of faculty, but received a non-array response"
+        );
+      }
+
       // Add editable status field
-      const withEditable = data.map((faculty) => ({
+      const withEditable = facultyArray.map((faculty) => ({
         ...faculty,
         updatedStatus: faculty.employmentStatus || "Probation Period",
         isEditing: false,
       }));
 
       setFacultyList(withEditable);
-      setError(null);
     } catch (err) {
       console.error("Error fetching faculty:", err);
-      setError("Failed to load faculty data. Please try again.");
+      setError(err.message || "Failed to load faculty data. Please try again.");
+      if (err.message.includes("Unauthorized")) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("faculty");
+        navigate("/faculty/rolelogin");
+      }
     } finally {
       setLoading(false);
     }
@@ -172,6 +85,9 @@ const RoleAssignmentManager = () => {
   };
 
   const handleSave = async (id) => {
+    setActionLoading((prev) => ({ ...prev, [id]: "save" }));
+    setError(null);
+    setSuccess(null);
     const faculty = facultyList.find((f) => f._id === id);
     try {
       const response = await fetch(
@@ -189,6 +105,9 @@ const RoleAssignmentManager = () => {
       );
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Unauthorized. Please log in again.");
+        }
         throw new Error("Failed to update status");
       }
 
@@ -199,17 +118,26 @@ const RoleAssignmentManager = () => {
             : f
         )
       );
-
-      // Show success notification (could use a toast component in a full app)
+      setSuccess(`Status updated for ${faculty.firstname}.`);
     } catch (err) {
       console.error("Error updating status:", err);
-      setError("Failed to update status. Please try again.");
+      setError(err.message);
+      if (err.message.includes("Unauthorized")) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("faculty");
+        navigate("/faculty/rolelogin");
+      }
+    } finally {
+      setActionLoading((prev) => ({ ...prev, [id]: null }));
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this faculty member?"))
       return;
+    setActionLoading((prev) => ({ ...prev, [id]: "delete" }));
+    setError(null);
+    setSuccess(null);
     try {
       const response = await fetch(
         `https://backend-super-admin.vercel.app/api/faculty/${id}`,
@@ -220,14 +148,24 @@ const RoleAssignmentManager = () => {
       );
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Unauthorized. Please log in again.");
+        }
         throw new Error("Failed to delete faculty");
       }
 
       setFacultyList(facultyList.filter((f) => f._id !== id));
-      // Show success notification
+      setSuccess("Faculty member deleted successfully.");
     } catch (err) {
       console.error("Error deleting faculty:", err);
-      setError("Failed to delete faculty member. Please try again.");
+      setError(err.message);
+      if (err.message.includes("Unauthorized")) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("faculty");
+        navigate("/faculty/rolelogin");
+      }
+    } finally {
+      setActionLoading((prev) => ({ ...prev, [id]: null }));
     }
   };
 
@@ -259,7 +197,8 @@ const RoleAssignmentManager = () => {
         </div>
         <button
           onClick={fetchFaculty}
-          className="flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors"
+          disabled={loading}
+          className="flex items-center px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
@@ -271,10 +210,15 @@ const RoleAssignmentManager = () => {
           {error}
         </div>
       )}
+      {success && (
+        <div className="mb-4 p-3 bg-green-100 border border-green-200 text-green-700 rounded-md">
+          {success}
+        </div>
+      )}
 
       {facultyList.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          No faculty members found.
+          No non-teaching faculty members found.
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -285,7 +229,13 @@ const RoleAssignmentManager = () => {
                   Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
+                  Employee ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Type
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Department
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Employment Status
@@ -303,11 +253,19 @@ const RoleAssignmentManager = () => {
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">
-                      {faculty.name}
+                      {faculty.firstname}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-700">{faculty.role}</div>
+                    <div className="text-gray-700">{faculty.employeeId}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-gray-700">{faculty.type}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-gray-700">
+                      {faculty.department || "N/A"}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -321,6 +279,7 @@ const RoleAssignmentManager = () => {
                             ? "border-blue-300 ring-1 ring-blue-200"
                             : "border-gray-300"
                         } focus:border-blue-500 focus:ring-blue-500 p-2 w-full`}
+                        disabled={actionLoading[faculty._id]}
                       >
                         {employmentStatuses.map((status) => (
                           <option key={status} value={status}>
@@ -348,21 +307,36 @@ const RoleAssignmentManager = () => {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => handleSave(faculty._id)}
-                        disabled={!faculty.isEditing}
+                        disabled={
+                          !faculty.isEditing || actionLoading[faculty._id]
+                        }
                         className={`inline-flex items-center px-3 py-1.5 rounded-md ${
-                          faculty.isEditing
+                          faculty.isEditing && !actionLoading[faculty._id]
                             ? "bg-green-100 text-green-700 hover:bg-green-200"
                             : "bg-gray-100 text-gray-400 cursor-not-allowed"
                         } transition-colors`}
                       >
-                        <Save className="h-4 w-4 mr-1" />
+                        {actionLoading[faculty._id] === "save" ? (
+                          <RefreshCw className="animate-spin h-4 w-4 mr-1" />
+                        ) : (
+                          <Save className="h-4 w-4 mr-1" />
+                        )}
                         Save
                       </button>
                       <button
                         onClick={() => handleDelete(faculty._id)}
-                        className="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
+                        disabled={actionLoading[faculty._id]}
+                        className={`inline-flex items-center px-3 py-1.5 rounded-md ${
+                          !actionLoading[faculty._id]
+                            ? "bg-red-100 text-red-700 hover:bg-red-200"
+                            : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        } transition-colors`}
                       >
-                        <Trash2 className="h-4 w-4 mr-1" />
+                        {actionLoading[faculty._id] === "delete" ? (
+                          <RefreshCw className="animate-spin h-4 w-4 mr-1" />
+                        ) : (
+                          <Trash2 className="h-4 w-4 mr-1" />
+                        )}
                         Delete
                       </button>
                     </div>
