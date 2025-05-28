@@ -118,7 +118,7 @@ const RoleAssignmentManager = () => {
             : f
         )
       );
-      setSuccess(`Status updated for ${faculty.firstname}.`);
+      setSuccess(`Status updated for ${faculty.firstName}.`);
     } catch (err) {
       console.error("Error updating status:", err);
       setError(err.message);
@@ -253,14 +253,15 @@ const RoleAssignmentManager = () => {
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium text-gray-900">
-                      {faculty.firstname}
+                      {faculty.firstName + " "}
+                      {faculty.lastName}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-gray-700">{faculty.employeeId}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-gray-700">{faculty.type}</div>
+                    <div className="text-gray-700">{faculty.designation}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-gray-700">
